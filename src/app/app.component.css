@@ -1,0 +1,23 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  app-login {
+    flex: 1; /* Ocupa todo el espacio disponible entre el header (si hay) y el footer */
+  }
+  
+  app-footer {
+    width: 100%; /* Asegura que el footer ocupe el 100% del ancho */
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box; /* Para que el padding no afecte el ancho del footer */
+  }
