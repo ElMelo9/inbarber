@@ -10,6 +10,7 @@ import { LoginI, LoginResponse } from '../../models/login.interface';
 import { LoginService } from '../../services/login/login.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import {saveToLocalStorage }from '../../helpers/storage-helper';
 
 
 @Component({
@@ -47,6 +48,8 @@ export class LoginComponent {
 
     this.loginService.login(form).subscribe({
       next: (response: LoginResponse) => {
+        saveToLocalStorage("token", response.token_usuario)
+        saveToLocalStorage("tipo",response.token_tipo)
         console.log('Login exitoso', response);  // Manejar la respuesta exitosa aquí
         Swal.fire({
           title: 'Login exitoso',

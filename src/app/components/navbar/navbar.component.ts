@@ -21,7 +21,7 @@ export class NavbarComponent {
   constructor(private router: Router) {
     this.items = [
       { label: 'Principal', icon: 'pi pi-home', command: () => this.router.navigate(['/home']) },
-      { label: 'Usuarios', icon: 'pi pi-user', command: () => this.router.navigate(['/profile']) },
+      { label: 'Usuarios', icon: 'pi pi-user', command: () => this.router.navigate(['/users']) },
       { label: 'Roles', icon: ' pi pi-id-card', command: () => this.router.navigate(['/profile']) },
       { label: 'Servicios', icon: 'pi pi-truck', command: () => this.router.navigate(['/profile']) }
     ];
