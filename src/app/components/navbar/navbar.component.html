@@ -1,1 +1,8 @@
-<p-tabMenu [model]="items"></p-tabMenu>
+<p-menubar [model]="items">
+
+    <ng-template pTemplate="end">
+        <div class="flex align-items-center gap-2">
+            <p-avatar image="/img/administrador.png"  size="large" shape="circle" />
+        </div>
+    </ng-template>
+</p-menubar>    

@@ -1,8 +1,0 @@
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav li .p-menuitem-link {
-    font-size: 1.2em;
-    color: #16a085;
-  }
-  
-  :host ::ng-deep .p-tabmenu .p-tabmenu-nav li .p-menuitem-link:hover {
-    color: #16a085;
-  }

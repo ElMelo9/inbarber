@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<p-table [columns]="columnas" [value]="usuarios" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [columns]="columnas" [value]="usuarios"  styleClass="p-datatable-gridlines"  [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -7,22 +7,22 @@
             </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body">
-        <tr *ngFor="let usuario of usuarios">
-            <td >{{ usuario.id_usuario }}</td>
-            <td >{{ usuario.id_rol }}</td>
-            <td >{{ usuario.doc_usuario }}</td>
-            <td >{{ usuario.nombre_usuario }}</td>
-            <td >{{ usuario.apellido_usuario }}</td>
-            <td >{{ usuario.direccion_usuario }}</td>
-            <td >{{ usuario.id_barrio }}</td>
-            <td >{{ usuario.email_usuario }}</td>
-            <td >{{ usuario.telefono_usuario }}</td>
-            <td >
-                <p-tag *ngIf="usuario.estado_rg === 1" severity="success" value="Activo"/>
-                <p-tag *ngIf="usuario.estado_rg === 0" severity="danger" value="Inactivo"/>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                <ng-container *ngIf="col.field === 'estado_rg'">
+                    <p-tag *ngIf="rowData[col.field] === 1" severity="success" value="Activo"></p-tag>
+                    <p-tag *ngIf="rowData[col.field] === 0" severity="danger" value="Inactivo"></p-tag>
+                </ng-container>
+                <ng-container *ngIf="col.field !== 'estado_rg'">
+                    {{ col.field === 'fecha_rg' ? (rowData[col.field] | date: 'yyyy-MM-dd HH:mm:ss') : rowData[col.field] }}
+                </ng-container>
+                <ng-container *ngIf="col.header == 'Opciones'">
+                    <p-button icon="pi pi-pencil" severity="warning" size="small"  pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger" size="small" pTooltip="Eliminar"  tooltipPosition="top"></p-button>
+                </ng-container>
             </td>
-            <td >{{ usuario.fecha_rg  | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
     </ng-template>
 </p-table>

@@ -5,17 +5,20 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { CommonModule } from '@angular/common'; 
+import { SpeedDialModule } from 'primeng/speeddial';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [NavbarComponent,TableModule,CommonModule,TagModule],
+  imports: [NavbarComponent,TableModule,CommonModule,TagModule,SpeedDialModule,ButtonModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
 
   usuarios: usuarioResponse [] = []
+
 
   columnas: any[] = [
     { field: 'id_usuario', header: 'ID' },
@@ -29,7 +32,9 @@ export class UsersComponent {
     { field: 'telefono_usuario', header: 'Telefono' },
     { field: 'estado_rg', header: 'Estado' },
     { field: 'fecha_rg', header: 'Fecha' },
+    {  header: 'Opciones' },
   ];
+
 
 
   constructor(private userService: UsersService) { }
