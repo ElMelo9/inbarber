@@ -1,0 +1,6 @@
+.button-container {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 1rem; /* Espacio entre los botones */
+    margin-top: 1rem; /* Espacio arriba de los botones si es necesario */
+  }

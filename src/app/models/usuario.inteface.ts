@@ -13,3 +13,17 @@ export interface usuarioResponse{
     fecha_rg: Date
     fecha_md: Date
 }
+
+export interface UsuarioUpdate{
+
+    id_rol: number
+    id_barrio: number
+    id_tipo_documento: number
+    doc_usuario: string
+    nombre_usuario: string
+    apellido_usuario: string
+    email_usuario: string
+    telefono_usuario: string
+    direccion_usuario: string
+    estado_rg: number
+}

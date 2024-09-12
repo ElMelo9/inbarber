@@ -1,13 +1,14 @@
 <app-navbar></app-navbar>
-<p-table [columns]="columnas" [value]="usuarios"  styleClass="p-datatable-gridlines"  [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [columns]="columnas" [value]="usuarios" styleClass="p-datatable-gridlines"
+    [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                 {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
         </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
@@ -16,13 +17,115 @@
                     <p-tag *ngIf="rowData[col.field] === 0" severity="danger" value="Inactivo"></p-tag>
                 </ng-container>
                 <ng-container *ngIf="col.field !== 'estado_rg'">
-                    {{ col.field === 'fecha_rg' ? (rowData[col.field] | date: 'yyyy-MM-dd HH:mm:ss') : rowData[col.field] }}
+                    {{ col.field === 'fecha_rg' ? (rowData[col.field] | date: 'yyyy-MM-dd HH:mm:ss') :
+                    rowData[col.field] }}
                 </ng-container>
                 <ng-container *ngIf="col.header == 'Opciones'">
-                    <p-button icon="pi pi-pencil" severity="warning" size="small"  pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button icon="pi pi-trash" severity="danger" size="small" pTooltip="Eliminar"  tooltipPosition="top"></p-button>
+                    <p-button (onClick)="showEditUser(rowData)" icon="pi pi-pencil" severity="warning" size="small"
+                        pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger" size="small" pTooltip="Eliminar"
+                        tooltipPosition="top"></p-button>
                 </ng-container>
             </td>
         </tr>
     </ng-template>
 </p-table>
+
+
+
+
+<p-dialog header="header" [(visible)]="visible">
+    <ng-template pTemplate="header">
+        <p-avatar image="/img/editar.png" size="large" shape="circle" />Editar Usuario
+    </ng-template>
+    <form [formGroup]="userForm" (ngSubmit)="onEditUser(userForm.value)">
+        <br>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <!--id_usuario-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="id_usuario" />
+                <label style="font-size: 1rem" for="id_usuario"><i class="fas fa-key"><span
+                            class="pi pi-key"></span></i> ID</label>
+            </p-floatLabel>
+            <!--id_rol-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="id_rol" required>
+                <label style="font-size: 1rem" for="id_rol"><i class="fas fa-user"><span class="pi pi-user"></span></i>
+                    Rol</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <!--id_tipo_documento-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="id_tipo_documento" required>
+                <label style="font-size: 1rem" for="id_tipo_documento"><i class="fas fa-id-card"><span
+                            class="pi pi-id-card"></span></i> Tipo documento</label>
+            </p-floatLabel>
+            <!--doc_usuario-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="doc_usuario" required />
+                <label style="font-size: 1rem" for="doc_usuario"><i class="fas fa-file"><span
+                            class="pi pi-file"></span></i> Documento</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <!--nombre_usuario-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="nombre_usuario" required>
+                <label style="font-size: 1rem" for="nombre_usuario"><i class="fas fa-user"><span
+                            class="pi pi-user"></span></i> Nombre</label>
+            </p-floatLabel>
+            <!--apellido_usuario-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="apellido_usuario" required />
+                <label style="font-size: 1rem" for="apellido_usuario"><i class="fas fa-user"><span
+                            class="pi pi-user"></span></i> Apellido</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <!--id_barrio-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="id_barrio" required>
+                <label style="font-size: 1rem" for="id_barrio"><i class="fas fa-map-marker"><span
+                            class="pi pi-map-marker"></span></i> Barrio</label>
+            </p-floatLabel>
+            <!--direccion_usuario-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="apellido_usuario" required />
+                <label style="font-size: 1rem" for="apellido_usuario"><i class="fas fa-home"><span
+                            class="pi pi-home"></span></i> Direccion</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <!--email-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="email_usuario" required>
+                <label style="font-size: 1rem" for="email_usuario"><i class="fas fa-at"><span
+                            class="pi pi-at"></span></i> Correo electronico</label>
+            </p-floatLabel>
+            <!--telefono-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="telefono_usuario" required />
+                <label style="font-size: 1rem" for="telefono_usuario"><i class="fas fa-phone"><span
+                            class="pi pi-phone"></span></i> Telefono</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <p-floatLabel>
+                <p-dropdown [options]="estados" optionLabel="nombre" formControlName="estado_rg"
+                    inputId="estado_rg" />
+                <label style="font-size: 1rem" for="estado_rg"><i class="fas fa-check"><span
+                    class="pi pi-check"></span></i> Estado</label>
+            </p-floatLabel>
+        </div>
+        <div class="button-container">
+            <p-button label="Cancelar" severity="danger" (onClick)="visible = false"></p-button>
+            <p-button type="submit" label="Guardar" severity="success" (onClick)="visible = false"></p-button>
+          </div>
+    </form>
+</p-dialog>

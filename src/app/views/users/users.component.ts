@@ -1,23 +1,52 @@
 import { Component } from '@angular/core';
 import { UsersService } from '../../services/users/users.service';
-import { usuarioResponse } from '../../models/usuario.inteface';
+import { usuarioResponse, UsuarioUpdate } from '../../models/usuario.inteface';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+
+
+
+
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [NavbarComponent,TableModule,CommonModule,TagModule,SpeedDialModule,ButtonModule],
+  imports: [NavbarComponent,
+    TableModule,
+    CommonModule,
+    TagModule,
+    SpeedDialModule,
+    ButtonModule,
+    DialogModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    FloatLabelModule,
+    AvatarModule,
+    AvatarGroupModule 
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
 
-  usuarios: usuarioResponse [] = []
+  usuarios: usuarioResponse[] = []
+  selectUser: usuarioResponse | undefined
+  visible: boolean = false;
+  isModalVisible = false;
+  userForm: FormGroup;
 
 
   columnas: any[] = [
@@ -32,12 +61,31 @@ export class UsersComponent {
     { field: 'telefono_usuario', header: 'Telefono' },
     { field: 'estado_rg', header: 'Estado' },
     { field: 'fecha_rg', header: 'Fecha' },
-    {  header: 'Opciones' },
+    { header: 'Opciones' },
+  ];
+
+  estados: any[] = [
+    { id: '1', nombre: 'Activo' },
+    { id: '0', nombre: 'Inactivo' }
   ];
 
 
+  constructor(private userService: UsersService, private fb: FormBuilder) {
 
-  constructor(private userService: UsersService) { }
+    this.userForm = this.fb.group({
+      id_usuario: [{ value: '', disabled: true }, [Validators.required]],
+      id_rol: ['', [Validators.required]],
+      id_tipo_documento: ['', [Validators.required]],
+      doc_usuario: ['', [Validators.required]],
+      nombre_usuario: ['', [Validators.required]],
+      apellido_usuario: ['', [Validators.required]],
+      direccion_usuario: ['', [Validators.required]],
+      id_barrio: ['', [Validators.required]],
+      email_usuario: ['', [Validators.required, Validators.email]],
+      telefono_usuario: ['', [Validators.required]],
+      estado_rg: ['', [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
     this.getAllUsers()
@@ -46,14 +94,25 @@ export class UsersComponent {
   getAllUsers(): void {
 
     this.userService.getAll().subscribe({
-      next: (data: usuarioResponse []) => {
+      next: (data: usuarioResponse[]) => {
         this.usuarios = data;
         console.log(this.usuarios)
-    },
-    error: (error) => {
-      console.error('Error al obtener usuarios:', error);
-    },
-  })
+      },
+      error: (error) => {
+        console.error('Error al obtener usuarios:', error);
+      },
+    })
+
+  }
+
+  showEditUser(user: usuarioResponse) {
+    this.selectUser= user
+    this.userForm.patchValue(user);
+    this.visible = true;
+  }
+
+
+  onEditUser(form: UsuarioUpdate) {
 
   }
 
