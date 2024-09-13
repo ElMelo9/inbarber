@@ -12,4 +12,5 @@ export interface rolResponse {
 }
 export interface rolUpdate {
     nombre_rol: string
+    estado_rg: number
 }
