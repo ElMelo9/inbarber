@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-roles',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './roles.component.html',
   styleUrl: './roles.component.css'
 })
