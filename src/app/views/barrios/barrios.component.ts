@@ -13,14 +13,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
-import { RolService } from '../../services/rol/rol.service';
-import { rolCreate, rolResponse, rolUpdate } from '../../models/rol.interface';
-
+import { barrioCreate, barrioResponse, barrioUpdate } from '../../models/barrio.interface';
+import { BarrioService } from '../../services/barrio/barrio.service';
+import { BarrioMapper } from '../../mappers/barrio.mapper';
 import Swal from 'sweetalert2';
-import { RolMapper } from '../../mappers/rol.mapper';
 
 @Component({
-  selector: 'app-roles',
+  selector: 'app-barrios',
   standalone: true,
   imports: [
     NavbarComponent,
@@ -36,23 +35,24 @@ import { RolMapper } from '../../mappers/rol.mapper';
     DropdownModule,
     FloatLabelModule,
     AvatarModule,
-    AvatarGroupModule],
-  templateUrl: './roles.component.html',
-  styleUrl: './roles.component.css'
+    AvatarGroupModule
+  ],
+  templateUrl: './barrios.component.html',
+  styleUrl: './barrios.component.css'
 })
-export class RolesComponent {
+export class BarriosComponent {
 
-  roles: rolResponse[] = []
-  selectRol: rolResponse | undefined
+  barrios: barrioResponse[] = []
+  selectBarrio: barrioResponse | undefined
   visible: boolean = false;
-  newRolVisible: boolean = false
+  newBarrioVisible: boolean = false
   isModalVisible = false;
-  rolForm: FormGroup;
-  newRolForm: FormGroup
+  barrioForm: FormGroup;
+  newBarrioForm: FormGroup
 
   columnas: any[] = [
-    { field: 'id_rol', header: 'ID' },
-    { field: 'nombre_rol', header: 'ID' },
+    { field: 'id_barrio', header: 'ID' },
+    { field: 'nombre_barrio', header: 'Nombre' },
     { field: 'estado_rg', header: 'Estado' },
     { field: 'fecha_rg', header: 'Fecha' },
     { header: 'Opciones' },
@@ -62,31 +62,33 @@ export class RolesComponent {
     { id: 1, nombre: 'Activo' },
     { id: 0, nombre: 'Inactivo' }
   ];
+
   constructor(
     private fb: FormBuilder,
-    private rolService: RolService
+    private barrioService: BarrioService
   ) {
         //formulario para rolRespose//
-        this.rolForm = this.fb.group({
-          id_rol: [{ value: '', disabled: true }, [Validators.required]],
-          nombre_rol: ['', [Validators.required]],
+        this.barrioForm = this.fb.group({
+          id_barrio: [{ value: '', disabled: true }, [Validators.required]],
+          nombre_barrio: ['', [Validators.required]],
           estado_rg: ['', [Validators.required]]
         });
     
         //formulario para rolCreate//
-        this.newRolForm = this.fb.group({
-          nombre_rol: ['', [Validators.required]]
+        this.newBarrioForm = this.fb.group({
+          nombre_barrio: ['', [Validators.required]]
         });
 
   }
+
   ngOnInit(): void {
-    this.getAllRoles()
+    this.getAllBarrios()
   }
 
-  getAllRoles(): void {
-    this.rolService.getAll().subscribe({
-      next: (data: rolResponse[]) => {
-        this.roles = data;
+  getAllBarrios(): void {
+    this.barrioService.getAll().subscribe({
+      next: (data: barrioResponse[]) => {
+        this.barrios = data;
         //console.log(this.roles)
       }, error: (error) => {
         console.error('Error al obtener los roles:', error);
@@ -94,34 +96,34 @@ export class RolesComponent {
     })
   }
 
-  showEditRol(rol: rolResponse) {
-    this.selectRol = rol
-    this.rolForm.patchValue(this.selectRol);
+  showEditBarrio(barrio: barrioResponse) {
+    this.selectBarrio = barrio
+    this.barrioForm.patchValue(this.selectBarrio);
     this.visible = true;
   }
 
-  getNombreRol(id_rol: number): string {
-    const rol = this.roles.find(rol => rol.id_rol === id_rol);
-    return rol ? rol.nombre_rol : 'N/A';
+  getNombreBarrio(id_barrio: number): string {
+    const rol = this.barrios.find(barrio => barrio.id_barrio === id_barrio);
+    return rol ? rol.nombre_barrio : 'N/A';
   }
 
-  onEditRol(form: rolResponse) {
-    const id = form.id_rol
-    const rolUpdate: rolUpdate = RolMapper.mapToRolUpdate(form);
-    this.rolService.updateById(id, rolUpdate).subscribe({
-      next: (data: rolResponse) => {
+  onEditBarrio(form: barrioResponse) {
+    const id = form.id_barrio
+    const barrioUpdate: barrioUpdate = BarrioMapper.mapToBarrioUpdate(form);
+    this.barrioService.updateById(id, barrioUpdate).subscribe({
+      next: (data: barrioResponse) => {
         Swal.fire({
-          title: 'Rol actualizado',
-          text: 'Rol actualizado correctamente.',
+          title: 'Barrio actualizado',
+          text: 'Barrio actualizado correctamente.',
           icon: 'success',
           confirmButtonText: 'Ok'
         });
       },
       error: (error) => {
-        console.error('Error al actualizar rol:', error);
+        console.error('Error al actualizar barrio:', error);
         Swal.fire({
           title: 'Error',
-          text: 'Hubo un problema al actualizar rol.',
+          text: 'Hubo un problema al actualizar barrio.',
           icon: 'error',
           confirmButtonText: 'Intentar de nuevo'
         });
@@ -129,23 +131,24 @@ export class RolesComponent {
     })
   }
 
-  onDeleteRol(form: rolResponse) {
-    const id = form.id_rol;
+  
+  onDeleteBarrio(form: barrioResponse) {
+    const id = form.id_barrio;
 
-    this.rolService.deleteById(id).subscribe({
+    this.barrioService.deleteById(id).subscribe({
       next: (data: boolean) => {
         Swal.fire({
-          title: 'Rol eliminado',
-          text: 'Rol eliminado correctamente.',
+          title: 'Barrio eliminado',
+          text: 'Barrio eliminado correctamente.',
           icon: 'success',
           confirmButtonText: 'Ok'
         });
       },
       error: (error) => {
-        console.error('Error al eliminado Rol:', error);
+        console.error('Error al eliminado barrio:', error);
         Swal.fire({
           title: 'Error',
-          text: 'Hubo un problema al eliminar rol.',
+          text: 'Hubo un problema al eliminar barrio.',
           icon: 'error',
           confirmButtonText: 'Intentar de nuevo'
         });
@@ -153,22 +156,22 @@ export class RolesComponent {
     })
   }
 
-  onNewRol(form: rolCreate) {
+  onNewBarrio(form: barrioCreate) {
     console.log(form)
-    this.rolService.create(form).subscribe({
-      next: (data: rolResponse) => {
+    this.barrioService.create(form).subscribe({
+      next: (data: barrioResponse) => {
         Swal.fire({
-          title: 'Rol creado',
-          text: 'Rol creado correctamente.',
+          title: 'Barrio creado',
+          text: 'Barrio creado correctamente.',
           icon: 'success',
           confirmButtonText: 'Ok'
         });
       },
       error: (error) => {
-        console.error('Error al crear Rol:', error);
+        console.error('Error al crear Barrio:', error);
         Swal.fire({
           title: 'Error',
-          text: 'Hubo un problema al crear Rol.',
+          text: 'Hubo un problema al crear Barrio.',
           icon: 'error',
           confirmButtonText: 'Intentar de nuevo'
         });
@@ -176,4 +179,5 @@ export class RolesComponent {
     })
 
   }
+
 }

@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
 <!-- tabla-->
-<p-table [columns]="columnas" [value]="roles" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '25rem'}">
+<p-table [columns]="columnas" [value]="barrios" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="caption">
-        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newRolVisible = true"/>
+        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newBarrioVisible = true"/>
 
     </ng-template>
 
@@ -33,9 +33,9 @@
 
                 <!-- Opciones de editar y eliminar -->
                 <ng-container *ngIf="col.header === 'Opciones'">
-                    <p-button (onClick)="showEditRol(rowData)" icon="pi pi-pencil" severity="warning" size="small"
+                    <p-button (onClick)="showEditBarrio(rowData)" icon="pi pi-pencil" severity="warning" size="small"
                         pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button (onClick)="onDeleteRol(rowData)" icon="pi pi-trash" severity="danger" size="small"
+                    <p-button (onClick)="onDeleteBarrio(rowData)" icon="pi pi-trash" severity="danger" size="small"
                         pTooltip="Eliminar" tooltipPosition="top"></p-button>
                 </ng-container>
 
@@ -47,21 +47,21 @@
 <!-- Modal edit rol-->
 <p-dialog header="header" [(visible)]="visible">
     <ng-template pTemplate="header">
-        <p-avatar image="/img/editar.png" size="large" shape="circle" />Editar Rol
+        <p-avatar image="/img/editar.png" size="large" shape="circle" />Editar Barrio
     </ng-template>
-    <form [formGroup]="rolForm" (ngSubmit)="onEditRol(rolForm.getRawValue())">
+    <form [formGroup]="barrioForm" (ngSubmit)="onEditBarrio(barrioForm.getRawValue())">
         <br>
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <!--id_rol-->
+            <!--id_barrio-->
             <p-floatLabel>
-                <input type="text" pInputText formControlName="id_rol" />
-                <label style="font-size: 1rem" for="id_rol"><i class="fas fa-key"><span
+                <input type="text" pInputText formControlName="id_barrio" />
+                <label style="font-size: 1rem" for="id_barrio"><i class="fas fa-key"><span
                             class="pi pi-key"></span></i> ID</label>
             </p-floatLabel>
-            <!-- nombre_rol -->
+            <!-- nombre_barrio -->
             <p-floatLabel>
-                <input type="text" pInputText formControlName="nombre_rol" required>
-                <label style="font-size: 1rem" for="nombre_rol"><i class="fas fa-user"><span
+                <input type="text" pInputText formControlName="nombre_barrio" required>
+                <label style="font-size: 1rem" for="nombre_barrio"><i class="fas fa-user"><span
                             class="pi pi-user"></span></i> Nombre</label>
             </p-floatLabel>
         </div>
@@ -80,7 +80,7 @@
         <!--buttons-->
         <div class="button-container">
             <p-button label="Cancelar" severity="danger" (onClick)="visible = false"></p-button>
-            <p-button type="submit" label="Guardar" severity="success" [disabled]="!rolForm.valid"
+            <p-button type="submit" label="Guardar" severity="success" [disabled]="!barrioForm.valid"
                 (onClick)="visible = false"></p-button>
         </div>
     </form>
@@ -88,26 +88,26 @@
 
 
 <!-- Modal new rol-->
-<p-dialog header="header" [(visible)]="newRolVisible">
+<p-dialog header="header" [(visible)]="newBarrioVisible">
     <ng-template pTemplate="header">
-        <p-avatar icon="pi pi-file-plus" size="large" shape="circle" />Nuevo rol
+        <p-avatar icon="pi pi-file-plus" size="large" shape="circle" />Nuevo barrio
     </ng-template>
-    <form [formGroup]="newRolForm" (ngSubmit)="onNewRol(newRolForm.value)">
+    <form [formGroup]="newBarrioForm" (ngSubmit)="onNewBarrio(newBarrioForm.value)">
         <br>
         <div class="row" style="display: flex; align-items: center; gap: 1rem;">
             <!--nombre_rol-->
             <p-floatLabel>
-                <input type="text" pInputText formControlName="nombre_rol" required>
-                <label style="font-size: 1rem" for="nombre_rol"><i class="fas fa-user"><span
+                <input type="text" pInputText formControlName="nombre_barrio" required>
+                <label style="font-size: 1rem" for="nombre_barrio"><i class="fas fa-user"><span
                             class="pi pi-user"></span></i> Nombre</label>
             </p-floatLabel>
         </div>
         <br><br>
         <!--buttons-->
         <div class="button-container">
-            <p-button label="Cancelar" severity="danger" (onClick)="newRolVisible = false"></p-button>
-            <p-button type="submit" label="Guardar" severity="success" [disabled]="!newRolForm.valid"
-                (onClick)="newRolVisible = false"></p-button>
+            <p-button label="Cancelar" severity="danger" (onClick)="newBarrioVisible = false"></p-button>
+            <p-button type="submit" label="Guardar" severity="success" [disabled]="!newBarrioForm.valid"
+                (onClick)="newBarrioVisible = false"></p-button>
         </div>
     </form>
 </p-dialog>
