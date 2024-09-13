@@ -32,6 +32,8 @@ export class NavbarComponent {
       { label: 'InBarber'},
       { label: 'Principal', icon: 'pi pi-home', command: () => this.router.navigate(['/home']) },
       { label: 'Usuarios', icon: 'pi pi-user', command: () => this.router.navigate(['/users']) },
+      { label: 'Barrios', icon: ' pi pi-map-marker', command: () => this.router.navigate(['/profile']) },
+      { label: 'Tipos documentos', icon: ' pi pi-file', command: () => this.router.navigate(['/profile']) },
       { label: 'Roles', icon: ' pi pi-id-card', command: () => this.router.navigate(['/profile']) },
       { label: 'Servicios', icon: 'pi pi-truck', command: () => this.router.navigate(['/profile']) }
     ];
