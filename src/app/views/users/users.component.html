@@ -1,16 +1,16 @@
 <app-navbar></app-navbar>
 <!-- tabla-->
-<p-table [columns]="columnas" [value]="usuarios" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '25rem'}">
+<p-table [columns]="columnas" [value]="usuarios" styleClass="p-datatable-gridlines; p-datatable-sm"
+    [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="caption">
-        <p-button icon="pi pi-user-plus" pTooltip="Nuevo" (onClick)="newUserVisible = true"/>
+        <p-button icon="pi pi-user-plus" pTooltip="Nuevo" (onClick)="newUserVisible = true" />
 
     </ng-template>
 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pTooltip="Reordenar"  tooltipPosition="top" >
                 {{ col.header }}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
         </tr>
     </ng-template>
@@ -42,13 +42,14 @@
                 </ng-container>
 
                 <!-- Opciones de editar y eliminar -->
-                <ng-container *ngIf="col.header === 'Opciones'">
-                    <p-button (onClick)="showEditUser(rowData)" icon="pi pi-pencil" severity="warning" size="small"
-                        pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button (onClick)="onDeleteUser(rowData)" icon="pi pi-trash" severity="danger" size="small"
-                        pTooltip="Eliminar" tooltipPosition="top"></p-button>
-                </ng-container>
-
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <ng-container *ngIf="col.header === 'Opciones'">
+                        <p-button (onClick)="showEditUser(rowData)" icon="pi pi-pencil" severity="warning" size="small"
+                            pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                        <p-button (onClick)="onDeleteUser(rowData)" icon="pi pi-trash" severity="danger" size="small"
+                            pTooltip="Eliminar" tooltipPosition="top"></p-button>
+                    </ng-container>
+                </div>
             </td>
         </tr>
     </ng-template>
@@ -236,14 +237,14 @@
         </div>
         <br><br>
         <div class="row" style="display: flex; align-items: center; gap: 1rem;">
-                        <!-- id_rol -->
-                        <p-floatLabel>
-                            <p-dropdown [options]="roles" optionLabel="nombre_rol" optionValue="id_rol" formControlName="id_rol"
-                                inputId="id_rol" [style]="{'minWidth':'250px', 'width': '250px'}" />
-                            <label style="font-size: 1rem" for="id_rol">
-                                <i class="fas fa-user"><span class="pi pi-user"></span></i> Rol
-                            </label>
-                        </p-floatLabel>
+            <!-- id_rol -->
+            <p-floatLabel>
+                <p-dropdown [options]="roles" optionLabel="nombre_rol" optionValue="id_rol" formControlName="id_rol"
+                    inputId="id_rol" [style]="{'minWidth':'250px', 'width': '250px'}" />
+                <label style="font-size: 1rem" for="id_rol">
+                    <i class="fas fa-user"><span class="pi pi-user"></span></i> Rol
+                </label>
+            </p-floatLabel>
             <!--password-->
             <p-floatLabel>
                 <input type="password" pInputText formControlName="password_usuario" required>

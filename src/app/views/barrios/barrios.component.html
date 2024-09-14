@@ -1,16 +1,16 @@
 <app-navbar></app-navbar>
 <!-- tabla-->
-<p-table [columns]="columnas" [value]="barrios" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '25rem'}">
+<p-table [columns]="columnas" [value]="barrios" styleClass="p-datatable-gridlines; p-datatable-sm"
+    [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="caption">
-        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newBarrioVisible = true"/>
+        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newBarrioVisible = true" />
 
     </ng-template>
 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pTooltip="Reordenar"  tooltipPosition="top">
                 {{ col.header }}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
         </tr>
     </ng-template>
@@ -30,15 +30,15 @@
                     {{ col.field === 'fecha_rg' ? (rowData[col.field] | date: 'yyyy-MM-dd HH:mm:ss') :
                     rowData[col.field] }}
                 </ng-container>
-
                 <!-- Opciones de editar y eliminar -->
-                <ng-container *ngIf="col.header === 'Opciones'">
-                    <p-button (onClick)="showEditBarrio(rowData)" icon="pi pi-pencil" severity="warning" size="small"
-                        pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button (onClick)="onDeleteBarrio(rowData)" icon="pi pi-trash" severity="danger" size="small"
-                        pTooltip="Eliminar" tooltipPosition="top"></p-button>
-                </ng-container>
-
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <ng-container *ngIf="col.header === 'Opciones'">
+                        <p-button (onClick)="showEditBarrio(rowData)" icon="pi pi-pencil" severity="warning"
+                            size="small" pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                        <p-button (onClick)="onDeleteBarrio(rowData)" icon="pi pi-trash" severity="danger" size="small"
+                            pTooltip="Eliminar" tooltipPosition="top"></p-button>
+                    </ng-container>
+                </div>
             </td>
         </tr>
     </ng-template>
@@ -55,8 +55,8 @@
             <!--id_barrio-->
             <p-floatLabel>
                 <input type="text" pInputText formControlName="id_barrio" />
-                <label style="font-size: 1rem" for="id_barrio"><i class="fas fa-key"><span
-                            class="pi pi-key"></span></i> ID</label>
+                <label style="font-size: 1rem" for="id_barrio"><i class="fas fa-key"><span class="pi pi-key"></span></i>
+                    ID</label>
             </p-floatLabel>
             <!-- nombre_barrio -->
             <p-floatLabel>

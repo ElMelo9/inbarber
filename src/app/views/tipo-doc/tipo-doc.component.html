@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <!-- tabla-->
-<p-table [columns]="columnas" [value]="tiposDocs" styleClass="p-datatable-gridlines"
+<p-table [columns]="columnas" [value]="tiposDocs" styleClass="p-datatable-gridlines; p-datatable-sm"
     [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="caption">
         <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newTipoDocVisible = true" />
@@ -9,9 +9,8 @@
 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pTooltip="Reordenar"  tooltipPosition="top">
                 {{ col.header }}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
         </tr>
     </ng-template>
@@ -31,14 +30,15 @@
                     {{ col.field === 'fecha_rg' ? (rowData[col.field] | date: 'yyyy-MM-dd HH:mm:ss') :
                     rowData[col.field] }}
                 </ng-container>
-
                 <!-- Opciones de editar y eliminar -->
-                <ng-container *ngIf="col.header === 'Opciones'">
-                    <p-button (onClick)="showEditTipoDoc(rowData)" icon="pi pi-pencil" severity="warning" size="small"
-                        pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button (onClick)="onDeleteTipoDoc(rowData)" icon="pi pi-trash" severity="danger" size="small"
-                        pTooltip="Eliminar" tooltipPosition="top"></p-button>
-                </ng-container>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <ng-container *ngIf="col.header === 'Opciones'">
+                        <p-button (onClick)="showEditTipoDoc(rowData)" icon="pi pi-pencil" severity="warning"
+                            size="small" pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                        <p-button (onClick)="onDeleteTipoDoc(rowData)" icon="pi pi-trash" severity="danger" size="small"
+                            pTooltip="Eliminar" tooltipPosition="top"></p-button>
+                    </ng-container>
+                </div>
 
             </td>
         </tr>

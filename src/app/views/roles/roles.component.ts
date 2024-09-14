@@ -52,7 +52,7 @@ export class RolesComponent {
 
   columnas: any[] = [
     { field: 'id_rol', header: 'ID' },
-    { field: 'nombre_rol', header: 'ID' },
+    { field: 'nombre_rol', header: 'Nombre' },
     { field: 'estado_rg', header: 'Estado' },
     { field: 'fecha_rg', header: 'Fecha' },
     { header: 'Opciones' },

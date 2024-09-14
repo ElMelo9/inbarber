@@ -1,16 +1,15 @@
 <app-navbar></app-navbar>
 <!-- tabla-->
-<p-table [columns]="columnas" [value]="roles" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '25rem'}">
+<p-table [columns]="columnas" [value]="roles" styleClass="p-datatable-gridlines; p-datatable-sm" [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="caption">
-        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newRolVisible = true"/>
+        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newRolVisible = true" />
 
     </ng-template>
 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pTooltip="Reordenar"  tooltipPosition="top">
                 {{ col.header }}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
         </tr>
     </ng-template>
@@ -32,13 +31,14 @@
                 </ng-container>
 
                 <!-- Opciones de editar y eliminar -->
-                <ng-container *ngIf="col.header === 'Opciones'">
-                    <p-button (onClick)="showEditRol(rowData)" icon="pi pi-pencil" severity="warning" size="small"
-                        pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button (onClick)="onDeleteRol(rowData)" icon="pi pi-trash" severity="danger" size="small"
-                        pTooltip="Eliminar" tooltipPosition="top"></p-button>
-                </ng-container>
-
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <ng-container *ngIf="col.header === 'Opciones'">
+                        <p-button (onClick)="showEditRol(rowData)" icon="pi pi-pencil" severity="warning" size="small"
+                            pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                        <p-button (onClick)="onDeleteRol(rowData)" icon="pi pi-trash" severity="danger" size="small"
+                            pTooltip="Eliminar" tooltipPosition="top"></p-button>
+                    </ng-container>
+                </div>
             </td>
         </tr>
     </ng-template>
@@ -55,8 +55,8 @@
             <!--id_rol-->
             <p-floatLabel>
                 <input type="text" pInputText formControlName="id_rol" />
-                <label style="font-size: 1rem" for="id_rol"><i class="fas fa-key"><span
-                            class="pi pi-key"></span></i> ID</label>
+                <label style="font-size: 1rem" for="id_rol"><i class="fas fa-key"><span class="pi pi-key"></span></i>
+                    ID</label>
             </p-floatLabel>
             <!-- nombre_rol -->
             <p-floatLabel>
