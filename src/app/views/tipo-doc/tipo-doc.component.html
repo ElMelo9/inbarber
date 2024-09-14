@@ -1,0 +1,126 @@
+<app-navbar></app-navbar>
+<!-- tabla-->
+<p-table [columns]="columnas" [value]="tiposDocs" styleClass="p-datatable-gridlines"
+    [tableStyle]="{'min-width': '25rem'}">
+    <ng-template pTemplate="caption">
+        <p-button icon="pi pi-file-plus" pTooltip="Nuevo" (onClick)="newTipoDocVisible = true" />
+
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+
+                <!-- Mostrar el estado como una etiqueta (p-tag) -->
+                <ng-container *ngIf="col.field === 'estado_rg'">
+                    <p-tag *ngIf="rowData[col.field] === 1" severity="success" value="Activo"></p-tag>
+                    <p-tag *ngIf="rowData[col.field] === 0" severity="danger" value="Inactivo"></p-tag>
+                </ng-container>
+
+                <!-- Mostrar otros campos excepto 'estado_rg'  -->
+                <ng-container *ngIf="col.field !== 'estado_rg'">
+                    {{ col.field === 'fecha_rg' ? (rowData[col.field] | date: 'yyyy-MM-dd HH:mm:ss') :
+                    rowData[col.field] }}
+                </ng-container>
+
+                <!-- Opciones de editar y eliminar -->
+                <ng-container *ngIf="col.header === 'Opciones'">
+                    <p-button (onClick)="showEditTipoDoc(rowData)" icon="pi pi-pencil" severity="warning" size="small"
+                        pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                    <p-button (onClick)="onDeleteTipoDoc(rowData)" icon="pi pi-trash" severity="danger" size="small"
+                        pTooltip="Eliminar" tooltipPosition="top"></p-button>
+                </ng-container>
+
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- Modal edit rol-->
+<p-dialog header="header" [(visible)]="visible">
+    <ng-template pTemplate="header">
+        <p-avatar image="/img/editar.png" size="large" shape="circle" />Editar Tipo de documento
+    </ng-template>
+    <form [formGroup]="tipoDocForm" (ngSubmit)="onEditTipoDoc(tipoDocForm.getRawValue())">
+        <br>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <!--id_tipoDoc-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="id_tipo_documento" />
+                <label style="font-size: 1rem" for="id_tipo_documento"><i class="fas fa-key"><span
+                            class="pi pi-key"></span></i> ID</label>
+            </p-floatLabel>
+            <!-- nombre_tipoDoc -->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="nombre_tipo_documento" required>
+                <label style="font-size: 1rem" for="nombre_tipo_documento"><i class="fas fa-user"><span
+                            class="pi pi-user"></span></i> Nombre</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <!-- sigla_tipoDoc -->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="sigla_tipo_documento" required>
+                <label style="font-size: 1rem" for="sigla_tipo_documento"><i class="fas fa-user"><span
+                            class="pi pi-user"></span></i> Sigla</label>
+            </p-floatLabel>
+            <!-- estado -->
+            <p-floatLabel>
+                <p-dropdown [options]="estados" optionLabel="nombre" optionValue="id" formControlName="estado_rg"
+                    inputId="estado_rg" styleClass="width: 100px" [style]="{'minWidth':'250px', 'width': '250px'}" />
+                <label style="font-size: 1rem" for="estado_rg">
+                    <i class="fas fa-check"><span class="pi pi-check"></span></i> Estado
+                </label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <!--buttons-->
+        <div class="button-container">
+            <p-button label="Cancelar" severity="danger" (onClick)="visible = false"></p-button>
+            <p-button type="submit" label="Guardar" severity="success" [disabled]="!tipoDocForm.valid"
+                (onClick)="visible = false"></p-button>
+        </div>
+    </form>
+</p-dialog>
+
+
+<!-- Modal new tipoDoc-->
+<p-dialog header="header" [(visible)]="newTipoDocVisible">
+    <ng-template pTemplate="header">
+        <p-avatar icon="pi pi-file-plus" size="large" shape="circle" />Nuevo tipo de documento
+    </ng-template>
+    <form [formGroup]="newTipoDocForm" (ngSubmit)="onNewTipoDoc(newTipoDocForm.value)">
+        <br>
+        <div class="row" style="display: flex; align-items: center; gap: 1rem;">
+            <!--nombre-->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="nombre_tipo_documento" required>
+                <label style="font-size: 1rem" for="nombre_tipo_documento"><i class="fas fa-user"><span
+                            class="pi pi-user"></span></i> Nombre</label>
+            </p-floatLabel>
+            <!-- sigla_tipoDoc -->
+            <p-floatLabel>
+                <input type="text" pInputText formControlName="sigla_tipo_documento" required>
+                <label style="font-size: 1rem" for="sigla_tipo_documento"><i class="fas fa-user"><span
+                            class="pi pi-user"></span></i> Sigla</label>
+            </p-floatLabel>
+        </div>
+        <br><br>
+        <!--buttons-->
+        <div class="button-container">
+            <p-button label="Cancelar" severity="danger" (onClick)="newTipoDocVisible = false"></p-button>
+            <p-button type="submit" label="Guardar" severity="success" [disabled]="!newTipoDocForm.valid"
+                (onClick)="newTipoDocVisible = false"></p-button>
+        </div>
+    </form>
+</p-dialog>

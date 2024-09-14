@@ -16,7 +16,5 @@ export interface tipoDocUpdate {
     nombre_tipo_documento: string
     sigla_tipo_documento: string
     estado_rg: number
-    fecha_rg: Date
-    fecha_md: Date
 
 }
