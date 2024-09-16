@@ -9,7 +9,7 @@ import { BadgeModule } from 'primeng/badge';
 import { CommonModule } from '@angular/common'; 
 import { DropdownModule } from 'primeng/dropdown';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { getFromLocalStorage } from '../../helpers/storage-helper';
+import { deleteFromLocalStorage, getFromLocalStorage } from '../../helpers/storage-helper';
 
 @Component({
   selector: 'app-navbar',
@@ -49,12 +49,21 @@ export class NavbarComponent {
 
     this.userOpcion = [
       {label: 'Cambiar Contraseña'},
-      {label: 'Cerrar Sesion'}
+      {label: 'Cerrar Sesion',command: () => this.outSession()}
     ]
     this.concurretUser = getFromLocalStorage('nombre_usuario')
 
 
 
+  }
+
+  outSession():boolean {
+    if(!deleteFromLocalStorage("token")) return false
+    if(!deleteFromLocalStorage("tipo")) return false
+    if(!deleteFromLocalStorage("exp")) return false
+    if(!deleteFromLocalStorage("nombre_usuario")) return false
+    this.router.navigate(['/login'])
+    return true
   }
 
 }
