@@ -7,6 +7,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { CommonModule } from '@angular/common'; 
+import { DropdownModule } from 'primeng/dropdown';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +19,9 @@ import { CommonModule } from '@angular/common';
     AvatarModule,
     MenubarModule,
     BadgeModule,
-    CommonModule
+    CommonModule,
+    DropdownModule,
+    SplitButtonModule 
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -25,6 +29,8 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent {
 
   items: MenuItem[];
+
+  userOpcion: any[];
 
   constructor(private router: Router) {
     
@@ -37,6 +43,14 @@ export class NavbarComponent {
       { label: 'Roles', icon: ' pi pi-id-card', command: () => this.router.navigate(['/roles']) },
       { label: 'Servicios', icon: 'pi pi-truck', command: () => this.router.navigate(['/profile']) }
     ];
+
+    this.userOpcion = [
+      {label: 'Cambiar Contraseña'},
+      {label: 'Cerrar Sesion'}
+    ]
+
+
+
   }
 
 }

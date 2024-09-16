@@ -1,8 +1,15 @@
 <p-menubar [model]="items">
+    <ng-template pTemplate="start">
+        <div class="flex align-items-center gap-2">
+            <p-avatar image="/img/inbarber.gif"  size="large"/>
+        </div>
+    </ng-template> 
 
     <ng-template pTemplate="end">
-        <div class="flex align-items-center gap-2">
-            <p-avatar image="/img/administrador.png"  size="large" shape="circle" />
+        <div class="flex align-items-center flex-column gap-1" style="text-align: center;">
+            <p-splitButton label="Eder Melo" icon="pi pi-user" [model]="userOpcion" dropdownIcon="pi pi-chevron-down" severity="success"></p-splitButton>
+
+
         </div>
     </ng-template>
 </p-menubar>    
