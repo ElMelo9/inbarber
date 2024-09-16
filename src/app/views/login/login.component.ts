@@ -11,6 +11,7 @@ import { LoginService } from '../../services/login/login.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import {saveToLocalStorage }from '../../helpers/storage-helper';
+import { decodeTokenPayload } from '../../helpers/jwt-helper';
 
 
 @Component({
@@ -45,19 +46,17 @@ export class LoginComponent {
   }
 
   onLogin(form: LoginI) {
-
     this.loginService.login(form).subscribe({
       next: (response: LoginResponse) => {
-        saveToLocalStorage("token", response.token_usuario)
-        saveToLocalStorage("tipo",response.token_tipo)
-        console.log('Login exitoso', response);  // Manejar la respuesta exitosa aquí
+        this.dataHelpper(response)
+        this.router.navigate(['home'])
         Swal.fire({
           title: 'Login exitoso',
           text: 'Has iniciado sesión correctamente.',
           icon: 'success',
           confirmButtonText: 'Ok'
         }); 
-        this.router.navigate(['home'])
+
       },
       error: (error) => {
         console.error('Error en el login', error);  // Manejar el error aquí
@@ -69,9 +68,19 @@ export class LoginComponent {
         });
       },
       complete: () => {
-        console.log('Proceso de login completado');  // Manejar cuando la operación se complete
+
       }
     });
+  }
+
+  dataHelpper(response: LoginResponse){
+    saveToLocalStorage("token", response.token_usuario)
+    saveToLocalStorage("tipo",response.token_tipo)
+    const tokenPayload =decodeTokenPayload(response.token_usuario)
+    console.log(tokenPayload)
+    saveToLocalStorage("exp", tokenPayload.exp)
+    saveToLocalStorage("nombre_usuario", tokenPayload.Nombre_usuario)
+
   }
 
 

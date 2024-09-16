@@ -9,6 +9,7 @@ import { BadgeModule } from 'primeng/badge';
 import { CommonModule } from '@angular/common'; 
 import { DropdownModule } from 'primeng/dropdown';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { getFromLocalStorage } from '../../helpers/storage-helper';
 
 @Component({
   selector: 'app-navbar',
@@ -32,6 +33,8 @@ export class NavbarComponent {
 
   userOpcion: any[];
 
+  concurretUser: string;
+
   constructor(private router: Router) {
     
     this.items = [
@@ -48,6 +51,7 @@ export class NavbarComponent {
       {label: 'Cambiar Contraseña'},
       {label: 'Cerrar Sesion'}
     ]
+    this.concurretUser = getFromLocalStorage('nombre_usuario')
 
 
 

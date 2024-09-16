@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-//import { JwtHelperService } from '@auth0/angular-jwt';
 import { getFromLocalStorage } from '../../helpers/storage-helper';
 
 @Injectable({
@@ -8,10 +7,8 @@ import { getFromLocalStorage } from '../../helpers/storage-helper';
 export class SecurityServiceService {
 
   constructor(
-    //private jwtHelper: JwtHelperService
   ) {}
 
-   // Método para verificar si el token existe y es válido
    isTokenValid(): boolean {
     const token = getFromLocalStorage('token');
 
@@ -22,8 +19,12 @@ export class SecurityServiceService {
   }
 
 
-  isTokenExpired(token: string): boolean {
-    return true;
-    //return this.jwtHelper.isTokenExpired(token); // Verifica si el token ha expirado
+  isTokenExpired(token: string): boolean {  
+    if (token) {
+      const expirationDate = new Date(getFromLocalStorage('exp') * 1000);
+      return expirationDate > new Date(); // Retorna true si el token no ha expirado
+    }
+    return false; // Retorna false si no hay token o ha expirado
+
   }
 }

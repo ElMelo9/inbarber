@@ -9,11 +9,8 @@ import { SecurityServiceService } from './services/security/security-service.ser
 
 export function jwtOptionsFactory(securityService: SecurityServiceService) {
   return {
-    tokenGetter: async () => {
-      // Aquí deberías devolver el token directamente, no la validez
-      return localStorage.getItem('token') || null;
-    },
-    //allowedDomains: ["example.com"], // Ajusta según tus necesidades
+    tokenGetter: () => localStorage.getItem('token') || null,
+    allowedDomains: ["example.com"], // Ajusta según tus necesidades
   };
 }
 
