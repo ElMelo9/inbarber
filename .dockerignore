@@ -1,0 +1,4 @@
+# Ignorar carpetas innecesarias
+.angular
+.vscode
+node_modules
