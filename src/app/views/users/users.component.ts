@@ -22,6 +22,9 @@ import { barrioResponse } from '../../models/barrio.interface';
 import { tipoDocResponse } from '../../models/tipoDoc.interface';
 import { TipoDocService } from '../../services/tipoDoc/tipo-doc.service';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 import Swal from 'sweetalert2';
 
 
@@ -43,7 +46,10 @@ import Swal from 'sweetalert2';
     DropdownModule,
     FloatLabelModule,
     AvatarModule,
-    AvatarGroupModule
+    AvatarGroupModule,
+    ToolbarModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'

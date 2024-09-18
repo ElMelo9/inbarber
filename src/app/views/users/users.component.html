@@ -3,13 +3,26 @@
 <p-table [columns]="columnas" [value]="usuarios" styleClass="p-datatable-gridlines; p-datatable-sm"
     [tableStyle]="{'min-width': '25rem'}">
     <ng-template pTemplate="caption">
-        <p-button icon="pi pi-user-plus" pTooltip="Nuevo" (onClick)="newUserVisible = true" />
 
+        <p-toolbar>
+            <div class="p-toolbar-group-start" style="display: flex; align-items: center; gap: 0.5rem;">
+                <p-button icon="pi pi-user-plus" pTooltip="Nuevo" tooltipPosition="top"
+                    (onClick)="newUserVisible = true" />
+                <p-button icon="pi pi-print" pTooltip="Imprimir" tooltipPosition="bottom" severity="warning" />
+                <p-button icon="pi pi-file-export" pTooltip="Exportar" severity="danger" />
+            </div>
+            <div class="p-toolbar-group-center">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText placeholder="Search" />
+                </span>
+            </div>
+        </p-toolbar>
     </ng-template>
 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pTooltip="Reordenar"  tooltipPosition="top" >
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pTooltip="Reordenar" tooltipPosition="top">
                 {{ col.header }}
             </th>
         </tr>
