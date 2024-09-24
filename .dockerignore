@@ -1,4 +1,6 @@
 # Ignorar carpetas innecesarias
 .angular
 .vscode
+.gitignore
+.editorcnfig
 node_modules

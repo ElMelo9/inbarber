@@ -1,0 +1,13 @@
+version: '3'
+services:
+  angular-app:
+    build: .
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app:delegated        # Montar tu código fuente local dentro del contenedor
+      - /app/node_modules/      # Evitar conflictos entre node_modules local y del contenedor
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Asegurar que los cambios se detecten en tiempo real
+    stdin_open: true             # Permitir la entrada interactiva
+    tty: true                    # Mantener el contenedor en ejecución

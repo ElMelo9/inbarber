@@ -5,7 +5,7 @@ FROM node:20
 WORKDIR /app
 
 # Instalar dependencias globales si es necesario (como Angular CLI)
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@18.2.0
 
 # Copiar el package.json y package-lock.json
 COPY package*.json ./
@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 4200
 
 # Iniciar el servidor de desarrollo
-CMD ["ng", "serve"]
+CMD ["npm", "start", "--", "--host", "0.0.0.0"]
